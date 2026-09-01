@@ -1,4 +1,4 @@
-public enum SpellEffectType
+public enum SpellEffectKind
 {
     None,
     DealDamage,
