@@ -12,11 +12,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1c9ba92602442a4bae76364e15151cd, type: 3}
   m_Name: VampiricHellfire
   m_EditorClassIdentifier: Assembly-CSharp::SpellDefinitionSO
-  spellId: 
-  displayName: 
-  rank: 0
-  element: 0
-  manaCost: 0
-  cooldown: 0
-  minWisdomToImprint: 0
-  effects: []
+  spellId: spell_vampiric_hellfire
+  displayName: Vampiric Hellfire
+  rank: 1
+  element: 1
+  manaCost: 20
+  cooldown: 2
+  minWisdomToImprint: 5
+  effects:
+  - id: eff_hellfire_damage
+    kind: 1
+    targetType: 1
+    targetCount: 1
+    condition:
+      kind: 0
+    scaling:
+      scalingType: 0
+      basePower: 50
+      independentWeights:
+      - attribute: 1
+        weight: 1.2
+      derivedPercentage: 0
+      sourceEffectRef: 
+    statusEffect: 0
+  - id: eff_vampiric_heal
+    kind: 2
+    targetType: 0
+    targetCount: 1
+    condition:
+      kind: 0
+    scaling:
+      scalingType: 1
+      basePower: 0
+      independentWeights: []
+      derivedPercentage: 0.5
+      sourceEffectRef: eff_hellfire_damage
+    statusEffect: 0
