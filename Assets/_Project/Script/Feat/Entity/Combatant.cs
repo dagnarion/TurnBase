@@ -21,11 +21,14 @@ public class Combatant : MonoBehaviour
    public float CurrentMP { get; private set; }   
    [field:ProgressBar("CurrentShield","MaxShield",EColor.Gray),SerializeField]
    public float CurrentShield { get; private set; }
-
+   public event Action<float> OnHealthChange;
+   public event Action<float> OnManaChange;
    private void Start()
    {
       CurrentHP = MaxHp;
       CurrentMP = MaxMp;
+      OnHealthChange?.Invoke(CurrentHP/MaxHp);
+      OnManaChange?.Invoke(CurrentMP/MaxMp);
       foreach (var it in Resitances)
       {
          elementRes.Add(it.ResType,it.Amount);
@@ -41,6 +44,7 @@ public class Combatant : MonoBehaviour
    {
       if (CurrentMP - amount < 0) return false;
       CurrentMP -= amount;
+      OnManaChange?.Invoke(CurrentMP/MaxMp);
       return true;
    }
 
@@ -69,6 +73,7 @@ public class Combatant : MonoBehaviour
       }
 
       CurrentHP -= damage;
+      OnHealthChange?.Invoke(CurrentHP/MaxHp);
       if (CurrentHP <= 0)
       {
          CurrentHP = 0;
