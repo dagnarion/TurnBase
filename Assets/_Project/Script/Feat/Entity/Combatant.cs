@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Combatant : MonoBehaviour
 {
-   [field: SerializeField] public String name { get; private set; }
+   [field: SerializeField] public String Name { get; private set; }
    [SerializeField] private float MaxHp;
    [SerializeField] private float MaxMp;
    [SerializeField] private float MaxShield;
@@ -13,6 +13,7 @@ public class Combatant : MonoBehaviour
    [SerializeField] private ElementDamage[] ElementDamages;
    private Dictionary<ElementType, float> elementRes = new Dictionary<ElementType, float>();
    private Dictionary<ElementType, float> elementDamage = new Dictionary<ElementType, float>();
+   [field: SerializeField] public bool isEnemy { get; private set; } = false;
    public bool IsPlayed { get; private set; }
    [field:ProgressBar("CurrentHP","MaxHp",EColor.Red),SerializeField]
     public float CurrentHP { get; private set; }
@@ -52,6 +53,21 @@ public class Combatant : MonoBehaviour
          float res = GetResistance(info.Type);
          damage = info.Amount * 90f / Mathf.Max(1f, res + 90f);
       }
+
+      if (CurrentShield > 0)
+      {
+         if (CurrentShield >= damage)
+         {
+            CurrentShield -= damage;
+            damage = 0f;
+         }
+         else
+         {
+            damage -= CurrentShield;
+            CurrentShield = 0f;
+         }
+      }
+
       CurrentHP -= damage;
       if (CurrentHP <= 0)
       {
@@ -63,6 +79,11 @@ public class Combatant : MonoBehaviour
    public float GetResistance(ElementType type)
    {
       return elementRes.TryGetValue(type, out float val) ? val : 0f;
+   }
+
+   public float GetElementDamage(ElementType type)
+   {
+      return elementDamage.TryGetValue(type, out float val) ? val : 0f;
    }
 
    public void AddShield(float amount) => CurrentShield += amount;

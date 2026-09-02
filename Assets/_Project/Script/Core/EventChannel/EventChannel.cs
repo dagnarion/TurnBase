@@ -13,7 +13,7 @@ public abstract class EventChannel<T> : ScriptableObject
     
     public void EventRaised(T value)
     {
-        if (!_isRunning)
+        if (_isRunning)
         {
             Debug.Log("RaiseEvent called while event is already running (reentrancy blocked).");
             return;
