@@ -75,8 +75,11 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!isDragging || canvas == null) return;
-        
+        if (!isDragging || canvas == null)
+        {
+            Debug.Log("CannotMove");
+            return;
+        }
         if (!isTargetedSpell)
         {
             rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;

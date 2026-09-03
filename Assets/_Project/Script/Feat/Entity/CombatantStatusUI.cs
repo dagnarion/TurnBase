@@ -20,6 +20,15 @@ public class CombatantStatusUI : MonoBehaviour
         combatant.OnManaChange -= ManaUpdate;
     }
 
-    private void HealthUpdate(float amount) => healthBar.value = amount;
-    private void ManaUpdate(float amount)  => manaBar.value = amount;
+    private void HealthUpdate(float amount)
+    {
+        if (healthBar == null)  return;
+        healthBar.value = amount;
+    }
+
+    private void ManaUpdate(float amount)
+    {
+        if(manaBar == null) return;
+        manaBar.value = amount;
+    }
 }
